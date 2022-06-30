@@ -4,7 +4,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { SiGithub } from 'react-icons/si';
 
 const option: OptionsProps = {
-  position: 'top-right',
+  position: 'top-center',
   autoClose: 5000,
   hideProgressBar: false,
   closeOnClick: true,
@@ -29,11 +29,13 @@ export const Notify = ({ type, message }: NotifyProps) => {
       break;
     case 'google':
       toast.dark(message, {
+        position: 'top-center',
         icon: ({ theme, type }) => <FcGoogle />
       });
       break;
     case 'github':
       toast.dark(message, {
+        position: 'top-center',
         icon: ({ theme, type }) => <SiGithub />
       });
       break;

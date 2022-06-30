@@ -8,4 +8,5 @@ export type InputProps ={
     errors: string | undefined; 
     loading: boolean;
     onChange?: any;
+    placeholder?: string;
 }
