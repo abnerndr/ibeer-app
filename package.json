@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "build:ios": "yarn build && yarn export && npx cap copy && npx cap sync && npx cap open ios",
+    "build:ios": "yarn build && yarn cap copy && yarn cap sync && yarn cap open ios",
     "build:android": "yarn build && yarn cap copy && yarn cap sync && yarn cap run --target ANDROID_XL android"
   },
   "dependencies": {

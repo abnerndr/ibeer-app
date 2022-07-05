@@ -22,7 +22,10 @@ export default function Home() {
       <Header userName={user?.displayName || user?.email} />
       {/* <div>{user?.email}</div>
       <button onClick={notif}>Notify !</button>
-      <button onClick={signOut}>Deslogar</button> */}
+      */}
+      <button className='w-32 h-6 bg-orange-300' onClick={signOut}>
+        Deslogar
+      </button>
     </div>
   );
 }
