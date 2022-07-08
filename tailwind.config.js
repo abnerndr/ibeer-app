@@ -5,6 +5,9 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    colors: {
+      'ibeer-900': '#FFBD4A'
+    }
   },
   plugins: [],
 }
