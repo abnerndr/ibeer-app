@@ -5,6 +5,7 @@ import { FcGoogle } from 'react-icons/fc';
 
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import Link from 'next/link';
 
 type FormValues = {
   email: string;
@@ -44,7 +45,7 @@ export default function FormLogin({ onSubmit, loading, signInWithGoogle }: ILogi
           />
         </div>
 
-        <div className='mb-14'>
+        <div className='mb-12'>
           <Input
             name='password'
             id='password'
@@ -54,6 +55,11 @@ export default function FormLogin({ onSubmit, loading, signInWithGoogle }: ILogi
             loading={loading}
             placeholder='senha'
           />
+          <div className='mt-3'>
+            <Link href={'/public/authentication/new-account'}>
+              <a className='text-orange-400 text-md font-medium'>criar uma conta</a>
+            </Link>
+          </div>
         </div>
 
         {!loading ? (
@@ -73,7 +79,7 @@ export default function FormLogin({ onSubmit, loading, signInWithGoogle }: ILogi
           </button>
         )}
 
-        <div className='mt-10'>
+        <div className='mt-8'>
           <button
             onClick={signInWithGoogle}
             type='button'

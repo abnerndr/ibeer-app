@@ -24,9 +24,6 @@ export default function Index({ create = true }) {
       </div>
 
       <FormCreate onSubmit={onSubmit} loading={loading} />
-      <div className='mt-10'>
-        <LoginFooter />
-      </div>
     </div>
   );
 }
