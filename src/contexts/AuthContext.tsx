@@ -6,7 +6,8 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   signInWithEmailAndPassword,
-  createUserWithEmailAndPassword
+  createUserWithEmailAndPassword,
+  onAuthStateChanged
 } from 'firebase/auth';
 import { auth } from '@/services/firebase';
 
@@ -25,6 +26,7 @@ export function AuthProvider({ children }: any) {
   const [token, setToken] = useState<string>();
   const [providerId, setProviderId] = useState<string>();
   const [responseUser, setResponseUser] = useState(null);
+  const [profile, setProfile] = useState(null);
 
   useEffect(() => {
     async function loadUserFromCookies() {
@@ -43,7 +45,7 @@ export function AuthProvider({ children }: any) {
     signInWithEmailAndPassword(authentication, email, password)
       .then((response: any) => {
         Router.push('/private/home');
-        setResponseUser(response.user);
+        setResponseUser(response._tokenResponse.refreshToken);
         setCookie(null, 'ibeer.token', response._tokenResponse.refreshToken, {
           maxAge: 60 * 60 * 1 * 24 * 30, //30 days
           path: '/'
@@ -140,17 +142,28 @@ export function AuthProvider({ children }: any) {
       });
   }
 
-  async function updateName({ displayName, photoUrl, phoneNumber }: any) {
+  useEffect(() => {
+    const authentication = auth;
+    onAuthStateChanged(authentication, (user: any) => {
+      setProfile(user);
+    });
+  }, [responseUser, token]);
+
+  async function updateProfile({ displayName }: any) {
     const authentication = auth;
     authentication
       .updateCurrentUser(displayName)
-      .then(function () {
-        //Update successful.
+      .then(function (response) {
+        return response;
       })
       .catch(function (error) {
         // An error happened.
       });
   }
 
-  return <AuthContext.Provider value={{ user, signIn, signUp, signOut, signInWithGoogle }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ user, profile, signIn, signUp, signOut, signInWithGoogle, updateProfile }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
