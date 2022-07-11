@@ -4,10 +4,13 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
-    colors: {
-      'ibeer-900': '#FFBD4A'
-    }
+    extend: {
+      colors: {
+        'ibeer-900': '#FFBD4A',
+        'ibeer-800': '#FFCA28'
+      }
+    },
+   
   },
   plugins: [],
 }

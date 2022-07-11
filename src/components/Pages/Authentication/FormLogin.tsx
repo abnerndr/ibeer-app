@@ -57,7 +57,7 @@ export default function FormLogin({ onSubmit, loading, signInWithGoogle }: ILogi
           />
           <div className='mt-3'>
             <Link href={'/public/authentication/new-account'}>
-              <a className='text-orange-400 text-md font-medium'>criar uma conta</a>
+              <a className='text-ibeer-900 text-md font-medium'>criar uma conta</a>
             </Link>
           </div>
         </div>
