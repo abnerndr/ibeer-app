@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ibeer</string>
+    <string name="title_activity_main">ibeer</string>
+    <string name="package_name">com.ibeer.app</string>
+    <string name="custom_url_scheme">com.ibeer.app</string>
+</resources>
