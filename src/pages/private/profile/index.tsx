@@ -3,8 +3,28 @@ import { ChevronLeftIcon, PhotographIcon } from '@heroicons/react/outline';
 import { CameraIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
 import AvatarIcon from '@/assets/images/avatar.svg';
+import { useContext, useState } from 'react';
+
+import ProfileForm from '@/components/Pages/Profile/ProfileForm/ProfileForm';
+import { AuthContext } from '@/contexts/AuthContext';
 
 export default function Profile() {
+  const { profile }: any = useContext(AuthContext);
+  console.log(profile, 'profile');
+  const [loading, setLoading] = useState(false);
+  const [urlPhoto, setUrlPhoto] = useState('');
+
+  const uploadToLocal = async (e: any) => {
+    console.log(e.target.files[0], 'file');
+    setUrlPhoto(URL.createObjectURL(e.target.files[0]));
+    // const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+    // if (e.target.files[0]) {
+    //   let fd = new FormData();
+    //   fd.append('photo', e.target.files[0]);
+    //   const { data } = await api.put(`/franchisees`, fd, config);
+    // }
+    // notify(`imagem`, 'photo alterada com sucesso!', 'success');
+  };
   return (
     <div>
       <div className='bg-ibeer-900 w-full h-72'>
@@ -18,40 +38,39 @@ export default function Profile() {
         <div>
           {/* profile photo */}
           <div>
-            {/* <div className='flex justify-center'>
-              <Avatar src={AvatarIcon.src} alt={'avatar'} width={200} height={200} />
-            </div>
-            <div className='flex absolute bg-gray-90 w-32 h-32'>
-              <input type='file' name='' id='' />
-              <CameraIcon className='h-14 w-14' />
-            </div> */}
-            <div className='mt-6 lg:hidden'>
-              <div className='flex items-center'>
-                <div className='flex-shrink-0 inline-block overflow-hidden h-12 w-12' aria-hidden='true'>
-                  <Avatar src={AvatarIcon.src} alt={'avatar'} width={200} height={200} />
-                </div>
-                <div className='ml-5 shadow-sm'>
-                  <div className='group relative border border-gray-300 py-2 px-3 flex items-center justify-center hover:bg-gray-50 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500'>
-                    <label
-                      htmlFor='mobile-user-photo'
-                      className='relative text-sm leading-4 font-medium text-gray-700 pointer-events-none'
-                    ></label>
-                    <input
-                      data-testid='banner'
-                      type='file'
-                      name='photo'
-                      id='mobile-user-photo'
-                      title='Sua photo'
-                      onChange={(e) => console.log(e.target.value)}
-                    />
-                  </div>
-                </div>
+            <div className='lg:hidden'>
+              <div className='flex justify-center'>
+                <Avatar
+                  src={urlPhoto || AvatarIcon.src}
+                  alt={'avatar'}
+                  width={200}
+                  height={200}
+                  className='object-cover w-[200px] h-[200px] rounded-full'
+                />
+              </div>
+              <div className='flex justify-center -mt-[205px]'>
+                <label className='cursor-pointer w-52 rounded-full h-52 bg-black bg-opacity-10 flex items-end justify-end text-md font-medium text-gray-50'>
+                  <span className='bg-gray-50 w-12 h-12 rounded-full flex items-center justify-center mb-2 mr-4'>
+                    <CameraIcon className='h-10 w-10 text-gray-800' />
+                  </span>
+                  <span className='sr-only'> usar banner</span>
+                  <input
+                    data-testid='bannermobile'
+                    type='file'
+                    name='banner'
+                    id='banner'
+                    title='Sua photo'
+                    onChange={uploadToLocal}
+                    className='absolute hidden inset-0 w-full h-full bg-black cursor-pointer border-gray-300 rounded-md'
+                  />
+                </label>
               </div>
             </div>
           </div>
+          {/*  form edit */}
+          <div className='mt-20 mx-3'>{profile && <ProfileForm loading={loading} />}</div>
         </div>
       </div>
-      <span>profile</span>
     </div>
   );
 }

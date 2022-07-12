@@ -21,7 +21,13 @@ export default function Header({ avatar, userName, walletValue = 0 }: IHeader) {
             <div className='pt-1.5 px-2'>
               <Link href='/private/profile'>
                 <a>
-                  <Avatar src={avatar || AvatarIcon.src} alt={'avatar'} width={70} height={70} />
+                  <Avatar
+                    src={avatar || AvatarIcon.src}
+                    alt={'avatar'}
+                    width={70}
+                    height={70}
+                    className='rounded-full border-2 border-orange-300'
+                  />
                 </a>
               </Link>
             </div>

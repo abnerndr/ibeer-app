@@ -8,17 +8,10 @@ type NImage = {
   className?: string;
 };
 
-export default function NextImage({ src, alt, width, height, ...props }: NImage) {
+export default function NextImage({ src, alt, width, height, className, ...props }: NImage) {
   return (
     <div>
-      <img
-        {...props}
-        src={src}
-        alt={alt}
-        width={width}
-        height={height}
-        className=' rounded-full border-2 border-orange-300'
-      />
+      <img {...props} src={src} alt={alt} width={width} height={height} className={className} />
     </div>
   );
 }
