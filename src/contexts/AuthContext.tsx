@@ -158,12 +158,9 @@ export function AuthProvider({ children }: any) {
         photoURL: photoURL
       })
         .then((response) => {
-          console.log(response, 'profileUpdate');
+          return response;
         })
-        .catch((error) => {
-          // An error occurred
-          // ...
-        });
+        .catch((error) => {});
       Notify({ type: 'success', message: 'perfil editado com sucesso' });
     } catch (error) {
       Notify({ type: 'error', message: 'falhar ao tentar editar perfil' });

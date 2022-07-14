@@ -18,17 +18,28 @@ export default function Profile() {
   const [image, setImage] = useState<any>(null);
 
   const { profile, updatedProfile, signOut }: any = useContext(AuthContext);
+  console.log(profile, 'profile');
 
   const uploadToLocal = async (e: any) => {
     setUrl(URL.createObjectURL(e.target.files[0]));
     setImage(e.target.files[0]);
-    const mountainsRef = ref(storange, image?.name);
+    const fullPath = e.target.files[0];
+    const mountainsRef = ref(storange, `${fullPath.name}`);
 
-    uploadBytes(mountainsRef, image).then((snapshot) => {
-      getDownloadURL(mountainsRef).then((url) => {
-        setPhotoUrl(url);
+    uploadBytes(mountainsRef, fullPath)
+      .then((snapshot) => {
+        getDownloadURL(mountainsRef)
+          .then((url) => {
+            setPhotoUrl(url);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        setImage(null);
+      })
+      .catch((error) => {
+        console.log(error);
       });
-    });
   };
 
   useEffect(() => {
@@ -51,7 +62,7 @@ export default function Profile() {
             </a>
           </Link>
         </div>
-        {profile?.photoURL && profile && (
+        {profile && (
           <div>
             {/* profile photo */}
             <div>

@@ -10,8 +10,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useCallback, useContext, useState } from 'react';
 import { AuthContext } from '@/contexts/AuthContext';
 
-export default function ProfileForm({ loading, setLoading, signOut }: IProfileForm) {
-  const [inputValue, setInputValue] = useState(null);
+export default function ProfileForm({ loading, setLoading, urlPicture, signOut }: IProfileForm) {
+  console.log(urlPicture);
   const { profile, updatedProfile }: any = useContext(AuthContext);
 
   const validationSchema = Yup.object().shape({
@@ -32,9 +32,11 @@ export default function ProfileForm({ loading, setLoading, signOut }: IProfileFo
     }
   });
 
-  const onSubmit = useCallback(async ({ displayName }: any) => {
+  const onSubmit = useCallback(async ({ displayName, photoURL }: any) => {
     setLoading(true);
-    const response = await updatedProfile({ displayName, setLoading });
+    photoURL = urlPicture;
+    const response = await updatedProfile({ displayName, photoURL, setLoading });
+    console.log(response, 'response profile');
   }, []);
 
   return (
