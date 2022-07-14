@@ -40,7 +40,7 @@ const config: CapacitorConfig = {
   },
   cordova: {},
   server: {
-    url: 'https://ibeer-app-sepia.vercel.app'
+    url: 'https://app.ibeer.store'
   }
 }
 

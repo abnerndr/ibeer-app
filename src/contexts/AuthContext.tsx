@@ -7,7 +7,8 @@ import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  onAuthStateChanged
+  onAuthStateChanged,
+  updateProfile
 } from 'firebase/auth';
 import { auth } from '@/services/firebase';
 
@@ -149,20 +150,31 @@ export function AuthProvider({ children }: any) {
     });
   }, [responseUser, token]);
 
-  async function updateProfile({ displayName }: any) {
-    const authentication = auth;
-    authentication
-      .updateCurrentUser(displayName)
-      .then(function (response) {
-        return response;
+  async function updatedProfile({ displayName, photoURL, setLoading }: any) {
+    const authentication: any = auth;
+    try {
+      updateProfile(authentication.currentUser, {
+        displayName: displayName,
+        photoURL: photoURL
       })
-      .catch(function (error) {
-        // An error happened.
-      });
+        .then((response) => {
+          console.log(response, 'profileUpdate');
+        })
+        .catch((error) => {
+          // An error occurred
+          // ...
+        });
+      Notify({ type: 'success', message: 'perfil editado com sucesso' });
+    } catch (error) {
+      Notify({ type: 'error', message: 'falhar ao tentar editar perfil' });
+    }
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
   }
 
   return (
-    <AuthContext.Provider value={{ user, profile, signIn, signUp, signOut, signInWithGoogle, updateProfile }}>
+    <AuthContext.Provider value={{ user, profile, signIn, signUp, signOut, signInWithGoogle, updatedProfile }}>
       {children}
     </AuthContext.Provider>
   );

@@ -23,9 +23,6 @@ export default function Home() {
       {/* <div>{user?.email}</div>
       <button onClick={notif}>Notify !</button>
       */}
-      <button className='w-32 h-6 bg-orange-300' onClick={signOut}>
-        Deslogar
-      </button>
     </div>
   );
 }

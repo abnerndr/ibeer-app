@@ -13,6 +13,7 @@ interface IHeader {
 }
 
 export default function Header({ avatar, userName, walletValue = 0 }: IHeader) {
+  const { profile }: any = useContext(AuthContext);
   return (
     <header className='w-full'>
       <div className='w-full h-20 bg-gray-100'>
@@ -22,11 +23,11 @@ export default function Header({ avatar, userName, walletValue = 0 }: IHeader) {
               <Link href='/private/profile'>
                 <a>
                   <Avatar
-                    src={avatar || AvatarIcon.src}
+                    src={profile?.photoURL || avatar || AvatarIcon.src}
                     alt={'avatar'}
                     width={70}
                     height={70}
-                    className='rounded-full border-2 border-orange-300'
+                    className='rounded-full object-cover w-[70px] h-[70px] border-2 border-orange-300'
                   />
                 </a>
               </Link>

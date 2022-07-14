@@ -1,6 +1,6 @@
 import Input from '@/components/common/Input/Input';
 import InputSchema from '@/components/common/Input/InputSchema';
-import { RefreshIcon } from '@heroicons/react/outline';
+import { ArrowLeftIcon, RefreshIcon } from '@heroicons/react/outline';
 import { Controller, useForm } from 'react-hook-form';
 import { auth } from '@/services/firebase';
 import { FormValues, IProfileForm } from './types';
@@ -10,14 +10,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useCallback, useContext, useState } from 'react';
 import { AuthContext } from '@/contexts/AuthContext';
 
-export default function ProfileForm({ loading }: IProfileForm) {
+export default function ProfileForm({ loading, setLoading, signOut }: IProfileForm) {
   const [inputValue, setInputValue] = useState(null);
-  const { profile, updateProfile }: any = useContext(AuthContext);
-  console.log(profile?.email, 'profile');
+  const { profile, updatedProfile }: any = useContext(AuthContext);
 
   const validationSchema = Yup.object().shape({
-    fullname: InputSchema.fullname,
-    email: InputSchema.email
+    // fullname: InputSchema.fullname,
+    // email: InputSchema.email
     // phone: InputSchema.phone
   });
   const {
@@ -33,15 +32,14 @@ export default function ProfileForm({ loading }: IProfileForm) {
     }
   });
 
-  const onSubmit = useCallback(async (formData: any) => {
-    const response = await updateProfile({ formData });
-    console.log(response);
-    console.log(formData);
+  const onSubmit = useCallback(async ({ displayName }: any) => {
+    setLoading(true);
+    const response = await updatedProfile({ displayName, setLoading });
   }, []);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className='mb-6'>
+      <div className='mb-4'>
         <Controller
           control={control}
           name='displayName'
@@ -61,7 +59,7 @@ export default function ProfileForm({ loading }: IProfileForm) {
         />
       </div>
 
-      <div className='mb-6'>
+      <div className='mb-4'>
         <Controller
           control={control}
           name='email'
@@ -80,7 +78,7 @@ export default function ProfileForm({ loading }: IProfileForm) {
         />
       </div>
 
-      <div className='mb-12'>
+      <div className='mb-2'>
         <Controller
           control={control}
           name='phone'
@@ -119,22 +117,33 @@ export default function ProfileForm({ loading }: IProfileForm) {
         />
       </div> */}
 
-      {!loading ? (
-        <button
-          type='submit'
-          className='w-full flex text-md font-semibold justify-center uppercase py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-orange-400 hover:bg-orange-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500'
-        >
-          salvar
-        </button>
-      ) : (
-        <button
-          type='submit'
-          className='w-full flex items-center gap-x-2 text-md font-semibold justify-center uppercase py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-gray-400'
-        >
-          salvando
-          <RefreshIcon className='h-5 w-5 animate-spin' />
-        </button>
-      )}
+      <div className='mt-8'>
+        {!loading ? (
+          <button
+            type='submit'
+            className='w-full flex text-md font-semibold justify-center uppercase py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-ibeer-900 hover:bg-ibeer-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ibeer-900'
+          >
+            salvar
+          </button>
+        ) : (
+          <button
+            type='submit'
+            className='w-full flex items-center gap-x-2 text-md font-semibold justify-center uppercase py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-gray-400'
+          >
+            salvando
+            <RefreshIcon className='h-5 w-5 animate-spin' />
+          </button>
+        )}
+      </div>
+
+      <button
+        type='button'
+        onClick={signOut}
+        className='mt-3 w-full flex text-md font-semibold justify-center items-center gap-x-1 uppercase py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-gray-400 hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400'
+      >
+        <ArrowLeftIcon className='w-5 h-5' />
+        <span>deslogar</span>
+      </button>
     </form>
   );
 }

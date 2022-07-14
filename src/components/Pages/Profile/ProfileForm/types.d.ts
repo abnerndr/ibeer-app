@@ -6,4 +6,7 @@ export type FormValues = {
 
 export interface IProfileForm{
     loading: boolean;
+    urlPicture: any;
+    setLoading: any;
+    signOut: any;
 }
